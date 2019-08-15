@@ -1,0 +1,34 @@
+version: 2.1
+
+commands:
+  all-tests:
+    description: "Roda todos os testes do projeto (unitários e integração)"
+    steps:
+      - run: "yarn test:cov"
+
+jobs:
+  node10x: &template
+    docker:
+      - image: circleci/node:10-jessie
+    steps:
+      - checkout
+      - run:
+          name: Install deps
+          command: yarn install
+      - all-tests
+      # - run:
+          # when: on_success
+          # command: npm run codecov
+  node11x:
+      <<: *template
+      docker:
+        - image: circleci/node:11
+workflows:
+  version: 2
+  required-checks:
+    jobs:
+      - node10x
+  optional-checks:
+    jobs:
+      - node11x
+
