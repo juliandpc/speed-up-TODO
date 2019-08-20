@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import {HttpService} from '@nestjs/common';
 
 describe('AppController', () => {
   let appController: AppController;
@@ -17,6 +18,11 @@ describe('AppController', () => {
   describe('root', () => {
     it('should return "Hello World!"', () => {
       expect(appController.getHello()).toBe('Hello World!');
+    });
+    it('should return "Hello World!" from get request /', async() => {
+      const http = new HttpService();
+      const {data} = await http.get("http://localhost:3000/").toPromise();
+      expect(data).toBe('Hello World!');
     });
   });
 });
