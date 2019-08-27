@@ -5,6 +5,7 @@ commands:
     description: "Roda todos os testes do projeto (unitários e integração)"
     steps:
       - run: "yarn test:cov"
+      - run: "yarn test:e2e"
 
 jobs:
   node10x: &template
