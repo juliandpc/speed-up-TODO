@@ -17,9 +17,9 @@ jobs:
           name: Install deps
           command: yarn install
       - all-tests
-      # - run:
-          # when: on_success
-          # command: npm run codecov
+      - run:
+          when: on_success
+          command: bash <(curl -s https://codecov.io/bash)
   node11x:
       <<: *template
       docker:
